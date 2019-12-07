@@ -1,32 +1,23 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="app" class="flex">
+    <div id="nav " class="w-64">
+      <router-link class="block" to="/">Home</router-link>
+      <router-link class="block" to="/about">About</router-link>
+      <router-link class="block" to="/mouse">Mouse</router-link>
+      <router-link class="block" to="/scroll">Scroll</router-link>
+      <router-link class="block" to="/portals">Portals</router-link>
+      <router-link class="block" to="/tooltip">Tooltip</router-link>
+      <router-link class="block" to="/forms">Forms</router-link>
     </div>
-    <router-view />
+    <div class="flex-1">
+      <router-view />
+      <portal-target name="modal"></portal-target>
+      <portal-target name="modal-confirm"></portal-target>
+      <portal-target name="tooltip" slim></portal-target>
+    </div>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<script>
+export default {};
+</script>

@@ -1,18 +1,56 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div>
+    <button @click="prev">prev</button>
+    <button @click="next">next</button>
+    <Interval :time="1000" @tick="log" />
+    <ul>
+      <li
+        v-for="(song, index) in songs"
+        :key="index"
+        :class="{
+          current: isCurrent(index)
+        }"
+      >
+        {{ song }}
+      </li>
+    </ul>
+
+    <input type="number" min="0" :max="total - 1" v-model.number="current" />
+
+    <ul>
+      <li v-for="(song, index) in songs" :key="index">
+        <button @click="select(index)">{{ index + 1 }}</button>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import usePlayer from "./../compositions/usePlayer";
+import Interval from "@/components/renderless/Inderval.vue";
 
 export default {
-  name: "home",
   components: {
-    HelloWorld
+    Interval
+  },
+  setup() {
+    const log = () => {
+      console.log(new Date());
+    };
+    return {
+      log,
+      ...usePlayer({
+        loop: true,
+        select: 3,
+        songs: ["ant", "bison", "camel", "duck", "bison"]
+      })
+    };
   }
 };
 </script>
+
+<style>
+.current {
+  background: red;
+}
+</style>
