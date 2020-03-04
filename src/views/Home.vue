@@ -35,7 +35,7 @@ export default {
   },
   setup() {
     const log = () => {
-      console.log(new Date());
+      // console.log(new Date());
     };
     return {
       log,

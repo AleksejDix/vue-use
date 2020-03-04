@@ -1,16 +1,14 @@
 import { Machine } from "xstate";
 
-const toggleMachine = Machine({
-  id: "toggle",
+export default Machine({
+  id: "switsch",
   initial: "off",
   states: {
     off: {
-      on: { TOGGLE: "on" }
+      on: { SWITCH: "on" }
     },
     on: {
-      on: { TOGGLE: "off" }
+      on: { SWITCH: "off" }
     }
   }
 });
-
-export default toggleMachine;

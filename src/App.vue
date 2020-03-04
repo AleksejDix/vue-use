@@ -8,9 +8,11 @@
       <router-link class="block" to="/portals">Portals</router-link>
       <router-link class="block" to="/tooltip">Tooltip</router-link>
       <router-link class="block" to="/forms">Forms</router-link>
+      <router-link class="block" to="/dnd">DnD</router-link>
     </div>
     <div class="flex-1">
       <router-view />
+      <portal-target name="video"></portal-target>
       <portal-target name="modal"></portal-target>
       <portal-target name="modal-confirm"></portal-target>
       <portal-target name="tooltip" slim></portal-target>
