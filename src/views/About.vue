@@ -1,49 +1,61 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    {{ state.context.tries }} {{ state.value }}
 
-    <pre>{{ query }}</pre>
+    <template v-if="state.matches('idle')">
+      <button @click="send('LOAD')">fetch</button>
+    </template>
 
-    <form @submit.prevent>
-      <input v-model="name" />
-      <input v-model.number="age" type="number" />
-      <button>search</button>
-    </form>
+    <template v-if="state.matches('fulfilled')">
+      <button @click="send('LOAD')">refetch</button>
+      <img :src="state.context.data" alt="" />
+    </template>
 
-    <router-link :to="{ query: { name: 'lidia', age: '31' } }">
-      Lidia
-    </router-link>
-    <router-link :to="{ query: { name: 'aleksej', age: '33' } }">
-      Aleksej
-    </router-link>
+    <template v-if="state.matches('rejected')">
+      <p>Data could not be loaded. You can retry</p>
+      <button class="bg-red-400" @click="send('LOAD')">retry</button>
+    </template>
   </div>
 </template>
 
 <script>
-import { pickBy, identity } from "lodash-es";
-import { ref } from "@vue/composition-api";
-
-function useQuery() {
-  const query = ref({});
-
-  // pickBy(params, identity);
-
-  pickBy(query.value, identity);
-
-  return { query };
-}
+import useFetchMachine from "@/compositions/useFetchMachine.js";
+import { watch } from "@vue/composition-api";
+import { list } from "@/api/dogs.js";
+import { assign } from "xstate";
 
 export default {
   setup() {
-    const name = ref("");
-    const age = ref(0);
-
-    const { query } = useQuery({
-      name,
-      age
+    const { state, send } = useFetchMachine({
+      services: {
+        fetchEndpoint: list
+      },
+      actions: {
+        try: assign({ tries: context => (context.tries += 1) }),
+        reject: assign({ error: (_, event) => event.data }),
+        fullfill: assign({ data: (_, event) => event.data })
+      }
     });
 
-    return { name, age, query };
+    watch(state, () => console.log(state));
+
+    return {
+      state,
+      send
+    };
+  },
+  data() {
+    return {
+      count: 39472
+    };
+  },
+  methods: {
+    up() {
+      this.count++;
+    },
+    zero(num, places) {
+      return String(num).padStart(places, "0");
+    }
   }
 };
 </script>

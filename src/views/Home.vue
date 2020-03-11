@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div>
+      {{ mode }}
+    </div>
+
     <button @click="prev">prev</button>
     <button @click="next">next</button>
     <Interval :time="1000" @tick="log" />
@@ -28,16 +32,19 @@
 <script>
 import usePlayer from "./../compositions/usePlayer";
 import Interval from "@/components/renderless/Inderval.vue";
+import useAppearanceMode from "@/compositions/useAppearanceMode.js";
 
 export default {
   components: {
     Interval
   },
   setup() {
+    const mode = useAppearanceMode();
     const log = () => {
       // console.log(new Date());
     };
     return {
+      mode,
       log,
       ...usePlayer({
         loop: true,

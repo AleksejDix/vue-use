@@ -1,9 +1,9 @@
-import { ref } from "@vue/composition-api";
+import { ref, watch } from "@vue/composition-api";
 
 export default function useCounter(value) {
   const counter = ref(value);
 
-  // watch(() => console.log("counter", counter.value));
+  watch(() => console.log("counter", counter.value));
 
   function up() {
     counter.value++;

@@ -19,7 +19,7 @@
 
 <script>
 import drag from "@/machines/drag.js";
-import Machine from "@/components/renderless/xstate-machine";
+import Machine from "@aleksejdix/vue-xstate";
 
 export default {
   components: {

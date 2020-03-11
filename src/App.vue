@@ -9,6 +9,7 @@
       <router-link class="block" to="/tooltip">Tooltip</router-link>
       <router-link class="block" to="/forms">Forms</router-link>
       <router-link class="block" to="/dnd">DnD</router-link>
+      <router-link class="block" to="/components">components</router-link>
     </div>
     <div class="flex-1">
       <router-view />
